@@ -1,0 +1,109 @@
+# Category tree mapped to the P&L lines (example; copy to categories.yaml and edit, or let the app use this
+# file as is). config/categories.yaml is gitignored: the app reads it when present, else this template.
+# Each leaf id must be unique across the whole file; it is what gets stored in the database.
+# The P&L line keys (income ... excluded) are fixed: the code expects them. Leaves can be added or removed.
+# After editing, run: uv run finance classify
+
+settings:
+  # Classifications below this confidence go to the review queue.
+  review_confidence_below: 0.6
+  # Tax provision (line 2) = this rate x income in categories flagged nf_issued: true.
+  # Monthly amounts typed in manual_entries are added on top. 0 = manual entries only.
+  tax_provision_rate: 0.0
+
+pnl_lines:
+  income:        "1. Income"
+  tax_provision: "2. Tax provision"
+  commissions:   "3. Commissions paid"
+  expenses:      "4. Expenses"
+  net_income:    "5. Net income"          # computed: 1 - 2 - 3 - 4
+  investments:   "6. Investments (− = net money invested)"
+  excluded:      "(excluded)"             # never counted in the P&L
+
+categories:
+  income:
+    salary:              {label: "Salary / pro-labore", label_pt: "Salário / pró-labore", icon: "💼"}
+    services_nf:         {label: "Professional services (NF)", label_pt: "Serviços (NF)", icon: "🧾", nf_issued: true}
+    dividends:           {label: "Dividends, interest & yields", label_pt: "Dividendos e rendimentos", icon: "📈"}
+    services_abroad:     {label: "Professional services abroad (no NF, net of tax)", label_pt: "Serviços no exterior", icon: "🌎"}
+    commissions_received: {label: "Commissions received", label_pt: "Comissões recebidas", icon: "🤝"}
+    reimbursements:      {label: "Reimbursements", label_pt: "Reembolsos", icon: "↩️"}
+    other_income:        {label: "Other income", label_pt: "Outras rendas", icon: "➕"}
+  commissions:
+    commissions:         {label: "Referral / partner commissions", label_pt: "Comissões pagas", icon: "🤝"}
+  expenses:
+    housing:             {label: "Housing", label_pt: "Moradia", icon: "🏠"}
+    utilities:           {label: "Utilities", label_pt: "Contas da casa", icon: "💡"}
+    groceries:           {label: "Groceries", label_pt: "Mercado", icon: "🛒"}
+    restaurants:         {label: "Restaurants & delivery", label_pt: "Restaurantes", icon: "🍽️"}
+    transport:           {label: "Transport & fuel", label_pt: "Transporte", icon: "⛽"}
+    car:                 {label: "Car", label_pt: "Carro", icon: "🚗"}
+    health:              {label: "Health", label_pt: "Saúde", icon: "🩺"}
+    education:           {label: "Education", label_pt: "Educação", icon: "🎓"}
+    kids:                {label: "Kids", label_pt: "Filhos", icon: "🧒"}
+    professional_services: {label: "Accounting & professional services", label_pt: "Serviços profissionais", icon: "🧑‍💼"}
+    personal_care:       {label: "Personal care", label_pt: "Cuidados pessoais", icon: "💇"}
+    subscriptions:       {label: "Subscriptions & software", label_pt: "Assinaturas", icon: "📱"}
+    shopping:            {label: "Shopping", label_pt: "Compras", icon: "🛍️"}
+    travel:              {label: "Travel", label_pt: "Viagem", icon: "✈️"}
+    leisure:             {label: "Leisure", label_pt: "Lazer", icon: "🎟️"}
+    bank_fees:           {label: "Bank fees & interest", label_pt: "Tarifas e juros", icon: "🏦"}
+    taxes:               {label: "Taxes paid (IPTU, IPVA, DARF, DAS...)", label_pt: "Impostos", icon: "🧮"}
+    donations:           {label: "Donations", label_pt: "Doações", icon: "💝"}
+    gifts:               {label: "Gifts", label_pt: "Presentes", icon: "🎁"}
+    other_expense:       {label: "Other", label_pt: "Outras despesas", icon: "📦"}
+  investments:
+    investment_contribution: {label: "Contributions (money invested, −)", label_pt: "Aportes", icon: "📥"}
+    investment_redemption:   {label: "Redemptions (money withdrawn, +)", label_pt: "Resgates", icon: "📤"}
+  excluded:
+    own_transfer:        {label: "Own transfers", label_pt: "Transferências entre contas", icon: "🔁"}
+    card_bill_payment:   {label: "Card bill payments", label_pt: "Pagamento de fatura", icon: "💳"}
+    data_error:          {label: "Ignored (bank data error)", label_pt: "Ignorado (erro do banco)", icon: "🚫"}
+
+# Pluggy category -> my leaf id. Either a single id, or {in: id, out: id} by direction
+# (in = money in, out = money out). Unlisted Pluggy categories stay uncategorized.
+# Generic Pluggy categories (Transfers, Transfer - PIX/TED/Bank Slip, Services) are left out on purpose:
+# they say how money moved, not what it was for.
+pluggy_map_confidence: 0.7
+pluggy_map:
+  "Shopping": shopping
+  "Online shopping": shopping
+  "Electronics": shopping
+  "Clothing": shopping
+  "Houseware": shopping
+  "Bookstore": shopping
+  "Eating out": restaurants
+  "Food delivery": restaurants
+  "Groceries": groceries
+  "Taxi and ride-hailing": transport
+  "Parking": transport
+  "Gas stations": transport
+  "Tolls and in vehicle payment": transport
+  "Vehicle maintenance": car
+  "Automotive": car
+  "Pharmacy": health
+  "Telecommunications": utilities
+  "Water": utilities
+  "Electricity": utilities
+  "Housing": housing
+  "Real estate financing": housing
+  "Education": education
+  "Digital services": subscriptions
+  "Airport and airlines": travel
+  "Accomodation": travel
+  "Gaming": leisure
+  "Bank fees": bank_fees
+  "Credit card fees": bank_fees
+  "Tax on financial operations": bank_fees
+  "Late payment and overdraft costs": bank_fees
+  "Taxes": taxes
+  "Taxes on investments": taxes
+  "Insurance": other_expense
+  # Pluggy "Donations" is a broad bucket (schools land here too): low confidence, so it goes to review.
+  "Donations": {in: other_income, out: donations, confidence: 0.5}
+  "Proceeds interests and dividends": dividends
+  "Income": other_income
+  "Cashback": other_income
+  # Low-trust fallbacks: when the transfer detector found no matching leg these land in the review queue.
+  "Same person transfer": {in: own_transfer, out: own_transfer, confidence: 0.5}
+  "Credit card payment": {in: card_bill_payment, out: card_bill_payment, confidence: 0.5}

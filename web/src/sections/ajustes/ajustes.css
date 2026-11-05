@@ -1,0 +1,64 @@
+.ajustes .aj-h { font-size: 14px; font-weight: 650; margin: 0; }
+.aj-hint { color: var(--ink-2); font-size: 12.5px; margin: 6px 0 10px; }
+.aj-error { color: var(--warning); font-size: 12.5px; font-weight: 600; margin: 6px 0; }
+.aj-list { list-style: none; margin: 8px 0 0; padding: 0; }
+.aj-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
+.aj-list li:first-child { border-top: 0; }
+.aj-list small, .aj-entry small, .aj-leg small { color: var(--muted); font-size: 11.5px; }
+.aj-entry { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+.aj-entry-end { display: inline-flex; align-items: center; gap: 10px; font-variant-numeric: tabular-nums; }
+.aj-entry-end .neg { color: var(--warning); }
+.aj-actions { display: flex; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+.aj-step { font-size: 12.5px; color: var(--ink-2); }
+.aj-report { margin-top: 12px; font-size: 13px; }
+.aj-report ul { margin: 4px 0 8px; padding-left: 18px; overflow-wrap: anywhere; }
+.aj-runs { margin-top: 12px; font-size: 13px; }
+.aj-runs summary { cursor: pointer; color: var(--ink-2); }
+
+.btn { border: 0; border-radius: 12px; padding: 9px 14px; font-weight: 650; font-size: 13.5px; background: var(--track); color: var(--ink); }
+.btn.primary { background: var(--accent-fill); color: var(--on-accent); }
+.btn.small { padding: 5px 10px; font-size: 12.5px; }
+.btn.danger { background: var(--warning); color: #fff; }
+.btn.danger-text { background: none; color: var(--warning); padding-inline: 6px; }
+.btn:disabled { opacity: 0.55; cursor: default; }
+.btn:focus-visible, .ajustes input:focus-visible, .ajustes select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.aj-audit { list-style: none; margin: 8px 0; padding: 0; display: grid; gap: 10px; }
+.aj-audit > li { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 6px; font-size: 13px; }
+.aj-audit-head { display: flex; justify-content: space-between; gap: 8px; }
+.aj-leg { display: grid; grid-template-columns: 1fr auto; gap: 0 10px; }
+.aj-leg small { grid-column: 1 / -1; }
+.aj-leg .aj-desc { color: var(--ink-2); overflow-wrap: anywhere; }
+.aj-leg b { grid-row: 2 / span 2; grid-column: 2; align-self: center; font-variant-numeric: tabular-nums; }
+
+.aj-rules { list-style: none; margin: 8px 0 0; padding: 0; }
+.aj-rules > li { border-top: 1px solid var(--line); padding: 10px 0; }
+.aj-rule-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.aj-rule-head code { font-size: 12.5px; flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.aj-conds { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--ink-2); }
+.aj-conds li { background: var(--bg); border-radius: 8px; padding: 2px 8px; overflow-wrap: anywhere; }
+
+.aj-budgets { list-style: none; margin: 8px 0 0; padding: 0; }
+.aj-budgets > li { border-top: 1px solid var(--line); padding: 8px 0; }
+.aj-budget-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13.5px; }
+.aj-budget-name { flex: 1 1 140px; min-width: 0; }
+.aj-budget-row small { color: var(--muted); font-size: 11.5px; }
+.ajustes input[type="text"], .ajustes select { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 13.5px; background: var(--bg); color: var(--ink); }
+.aj-budget-row input { width: 96px; text-align: right; }
+
+.aj-form { display: grid; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.aj-form label { display: grid; gap: 4px; font-size: 12.5px; color: var(--ink-2); }
+.aj-form input, .aj-form select { width: 100%; }
+.aj-form .btn { justify-self: start; }
+
+.aj-seg { display: inline-flex; gap: 4px; background: var(--track); border-radius: 12px; padding: 3px; margin-top: 10px; }
+.aj-seg label { position: relative; padding: 7px 14px; border-radius: 10px; font-size: 13.5px; cursor: pointer; }
+.aj-seg label.sel { background: var(--card); box-shadow: var(--shadow); font-weight: 650; }
+.aj-seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.aj-seg label:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.dialog-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 60; }
+.dialog { background: var(--card); color: var(--ink); border-radius: var(--radius); padding: 18px; max-width: 420px; width: 100%; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3); }
+.dialog h2 { font-size: 16px; margin: 0 0 8px; }
+.dialog p { font-size: 13.5px; color: var(--ink-2); margin: 0 0 16px; overflow-wrap: anywhere; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; }

@@ -1,0 +1,90 @@
+.month-head { display: flex; align-items: center; gap: 2px; margin: -6px 0 0 -8px; }
+.month-label { margin: 0; font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+
+.hero { padding: 8px 0 2px; }
+.hero-label { font-size: 13.5px; color: var(--ink-2); }
+.hero-value { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.hero-value.is-left { color: var(--positive); }
+.hero-value.is-short { color: var(--warning); }
+.hero-sub { font-size: 13px; color: var(--ink-2); }
+
+.card.review-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.review-count { font-size: 14.5px; font-weight: 650; }
+.review-card .sub { font-size: 12px; }
+
+.isb { margin-top: 8px; }
+.isb-plot { position: relative; margin-top: 10px; }
+.isb-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.isb-plot .tip-start { transform: translate(-25%, calc(-100% - 6px)); }
+.isb-plot .tip-end { transform: translate(-75%, calc(-100% - 6px)); }
+.isb-hit { outline: none; cursor: default; }
+.isb-hit:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.isb-x { display: flex; font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+.isb-x span { flex: 1; text-align: center; }
+.isb-x .on { color: var(--ink); font-weight: 700; }
+.chart-skeleton { height: 120px; border-radius: 12px; margin-top: 10px; }
+
+.meter { height: 10px; background: var(--track); border-radius: 6px; margin-top: 10px; overflow: hidden; }
+.meter b { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--series-income), var(--accent)); }
+.meter b.over { background: var(--warning); }
+
+.cats-card { padding: 4px 14px; }
+
+/* Income sources: RendaBar's track; legend wraps, name in ink, share and value muted. */
+.income-legend { gap: 6px 14px; }
+.income-legend .lg-name { color: var(--ink); }
+.income-legend .lg-val { font-variant-numeric: tabular-nums; }
+.income-note { margin: 8px 0 0; font-size: 11.5px; color: var(--muted); }
+
+/* Spending doughnut: ring + legend side by side when the card is wide enough, stacked otherwise. */
+.donut { container-type: inline-size; padding: 12px 0 14px; border-bottom: 1px solid var(--line); }
+.donut-body { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.donut-plot { position: relative; width: 148px; flex: none; }
+.donut-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.donut-slice-g { transition: opacity 0.15s ease; }
+.donut-slice-g.is-dim { opacity: 0.35; }
+.donut-slice { cursor: default; outline: none; }
+.donut-slice:focus-visible { stroke: var(--ink); stroke-width: 2px; }
+.donut-pct { font-size: 10px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; font-variant-numeric: tabular-nums; }
+.donut-center text { text-anchor: middle; }
+.donut-total { font-size: 15px; font-weight: 700; fill: var(--ink); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.donut-word { font-size: 10.5px; fill: var(--muted); }
+.donut-tip { margin-top: -4px; }
+/* Slices on the sides: the tooltip grows inward, so it stays inside the plot (and the card). */
+.donut-tip.tip-start { transform: translate(-16px, calc(-100% - 6px)); }
+.donut-tip.tip-end { transform: translate(calc(-100% + 16px), calc(-100% - 6px)); }
+.donut-legend {
+  list-style: none; margin: 0; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 14px; font-size: 12.5px; color: var(--ink-2);
+}
+.donut-legend li { display: flex; align-items: center; gap: 6px; min-width: 0; transition: opacity 0.15s ease; }
+.donut-legend li.is-dim { opacity: 0.45; }
+.donut-legend i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.donut-legend .lg-name { color: var(--ink); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.donut-legend .lg-val { font-variant-numeric: tabular-nums; font-weight: 600; }
+@container (min-width: 360px) {
+  .donut-body { flex-direction: row; gap: 22px; }
+  .donut-legend { grid-template-columns: minmax(0, 1fr); flex: 1; gap: 7px; }
+}
+@media (prefers-reduced-motion: reduce) { .donut-slice-g, .donut-legend li { transition: none; } }
+.see-all {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px 0 10px; border: 0;
+  border-top: 1px solid var(--line); background: none; color: var(--accent); font-size: 13.5px; font-weight: 600; border-radius: 0;
+}
+
+/* Phone: one column in the mockup's order. Desktop: left = Sobrou, renda, trend; right = review, categories. */
+.inicio-grid { display: flex; flex-direction: column; }
+.inicio-col { display: contents; }
+.o-hero { order: 1; } .o-income { order: 2; } .o-renda { order: 3; } .o-review { order: 4; } .o-trend { order: 5; }
+.o-spend { order: 6; } .o-cats { order: 7; }
+@media (min-width: 1024px) {
+  .inicio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; align-items: start; }
+  .inicio-col { display: block; }
+  .inicio-col > :first-child > .card { margin-top: 0; }
+  .inicio-col:last-child { padding-top: 6px; }
+  .o-sankey { grid-column: 1 / -1; }
+}
+
+.inicio-grid.is-stale { opacity: 0.6; transition: opacity 0.2s ease; }
+@media (prefers-reduced-motion: reduce) { .inicio-grid.is-stale { transition: none; } }
+.link-btn { border: 0; background: none; padding: 0; color: var(--accent); font-weight: 600; font-size: 13.5px; }

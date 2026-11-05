@@ -1,0 +1,51 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Local data (SQLite DB, raw Pluggy dumps)
+data/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+raw/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Brainstorming mockups (may contain financial figures)
+.superpowers/
+
+# Web app
+web/node_modules/
+web/dist/
+web/*.tsbuildinfo
+
+# Personal config: the app falls back to config/*.example.yaml when these are missing
+config/rules.yaml
+config/categories.yaml
+
+# Local Claude Code settings
+.claude/
+.worktrees/
+
+# rules.yaml write lock / temp files (classify._rules_lock, _write_atomic)
+config/.*.lock
+config/.*.tmp
+.schema.before.d.ts

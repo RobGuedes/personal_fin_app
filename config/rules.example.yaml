@@ -1,0 +1,93 @@
+# Classification rules and transfer-detection settings (example). config/rules.yaml is gitignored: the app
+# reads it when present, else this template; the first rule created from the app copies this file to it.
+# After editing, run: uv run finance classify
+#
+# Pipeline (first match wins): manual > transfer detector > rules below > Pluggy map > uncategorized.
+
+transfers:
+  # Max days between the two legs of a card bill payment (bank debit <-> card credit).
+  card_payment_window_days: 3
+  # Max days between the two legs of a transfer between my own accounts.
+  own_transfer_window_days: 2
+  # Descriptions that name one of my own accounts (some banks' internal moves between two accounts of the
+  # same holder carry no CPF or name).
+  own_account_patterns: ["conta digital", "conta investimento"]
+  # My CPF and name come from .env (MY_CPF, MY_NAME) and the Pluggy identity data.
+
+investments:
+  # Bank transactions matching any of these are investment flows:
+  # money out = contribution, money in = redemption.
+  pluggy_categories: ["Investments", "Fixed income", "Mutual funds"]
+  operation_types: ["APLICACAO_FINANCEIRA", "RESGATE_APLIC_FINANCEIRA"]
+  description_patterns:
+    - "APLICA[CÇ][AÃ]O"
+    - "RESGATE"
+    - "AQUISICAO DE COTAS"
+    - "OPERA[CÇ][OÕ]ES EM BOLSA"
+    - "COFRINHO"
+    - "conta investimento"
+  counterparty_docs: []      # CNPJs of brokers/funds, digits only
+  # ...unless they match one of these (taxes withheld on investments are expenses, not flows).
+  exclude_patterns:
+    - "^IRRF"
+    - "\\bIR\\b"
+    - "IRRF S/"
+    - "RENDIMENTO"
+    - "REMUNERA[CÇ][AÃ]O$"
+
+# Rules. Every condition given must match. Conditions:
+#   description:        regex on description or description_raw (case-insensitive)
+#   party:              regex on the counterparty name, merchant name or description (any of them)
+#   counterparty_name:  regex on the counterparty / merchant name
+#   counterparty_doc:   CPF/CNPJ digits, or a list of them
+#   merchant:           regex on the merchant name (card purchases)
+#   account:            regex on the account name, or the last digits of its number
+#   direction:          in | out
+#   amount_min / amount_max:  bounds on the absolute amount
+#   payment_method:     card | pix | ted_doc | boleto | debit | fee | other  (or a list)
+# Optional: priority (higher runs first, default 0), confidence (default 1.0).
+rules:
+  # --- Binance (account "Binance"; see docs/binance.md) ---
+  - id: binance_fiat
+    # BRL into/out of Binance comes from/goes to my own (possibly unconnected) bank accounts.
+    account: "Binance"
+    description: "^Binance BRL (deposit|withdrawal)"
+    category: own_transfer
+    priority: 10
+  - id: binance_earn
+    account: "Binance"
+    description: "^Binance Earn interest"
+    category: dividends
+    priority: 10
+  - id: binance_pix
+    # Bank side of a Pix to Binance: own money, excluded (the Binance leg is binance_fiat).
+    counterparty_name: "BINANCE"
+    category: own_transfer
+    priority: 10
+
+  # --- Examples (invented names: replace with your own) ---------------------------------------
+  - id: mercado_exemplo
+    # Card purchases at a supermarket.
+    party: "MERCADO EXEMPLO"
+    direction: out
+    category: groceries
+
+  - id: empresa_x_salary
+    # Monthly salary from an employer, matched by its CNPJ (digits only) or name.
+    party: "EMPRESA X"
+    direction: in
+    category: salary
+
+  - id: pessoa_a_rent
+    # Fixed monthly Pix to a landlord: amount bounds keep other payments to the same person out.
+    party: "PESSOA A"
+    direction: out
+    amount_min: 1000
+    amount_max: 3000
+    category: housing
+    priority: 1
+
+  - id: streaming_exemplo
+    description: "STREAMING EXEMPLO"
+    payment_method: card
+    category: subscriptions

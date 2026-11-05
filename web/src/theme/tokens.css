@@ -1,0 +1,151 @@
+:root {
+  --bg: #f6f4f0;
+  --card: #ffffff;
+  --ink: #1d1b18;
+  --ink-2: #6d685f;
+  --muted: #8a857c;
+  --accent: #7c6cf0;
+  /* fill behind white text (buttons, selected chips, pills): #fff on it = 5.03:1 */
+  --accent-fill: #6a58e8;
+  --on-accent: #ffffff;
+  --positive: #1f9d6b;
+  --warning: #d0582f;
+  /* server banner: #fff on #b94a25 = 5.16:1 */
+  --banner-bg: #b94a25;
+  --banner-ink: #ffffff;
+  --track: #e7e2d8;
+  --line: #ece7dd;
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --radius: 18px;
+  --shadow: 0 2px 10px rgba(60, 50, 30, 0.06);
+  /* categorical slots (index = color_slot): the validated reference palette, 8 slots */
+  --cat-0: #2a78d6;
+  --cat-1: #eb6834;
+  --cat-2: #1baf7a;
+  --cat-3: #eda100;
+  --cat-4: #e87ba4;
+  --cat-5: #008300;
+  --cat-6: #6250d6;
+  --cat-7: #e34948;
+  --cat-other: #b9b2a6;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16140f;
+    --card: #211e18;
+    --ink: #f3efe7;
+    --ink-2: #b4ada1;
+    --muted: #8f897d;
+    --accent: #9c8ff5;
+    /* #fff on it = 4.96:1; against --card it is 3.35:1 (non-text >= 3:1) */
+    --accent-fill: #6b5ce0;
+    --on-accent: #ffffff;
+    --positive: #3dc08c;
+    --warning: #ee7a52;
+  /* server banner: #16140f on #ee7a52 = 6.61:1 */
+  --banner-bg: #ee7a52;
+  --banner-ink: #16140f;
+    --track: #3a362d;
+    --line: #2d2a22;
+    --nav-bg: rgba(33, 30, 24, 0.92);
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    --cat-0: #5a9be8;
+    --cat-1: #f2875a;
+    --cat-2: #3cc693;
+    --cat-3: #f2b83a;
+    --cat-4: #ee95b6;
+    --cat-5: #2fae2f;
+    --cat-6: #8a7ae6;
+    --cat-7: #e66767;
+    --cat-other: #6f695e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16140f;
+  --card: #211e18;
+  --ink: #f3efe7;
+  --ink-2: #b4ada1;
+  --muted: #8f897d;
+  --accent: #9c8ff5;
+  /* #fff on it = 4.96:1; against --card it is 3.35:1 (non-text >= 3:1) */
+  --accent-fill: #6b5ce0;
+  --on-accent: #ffffff;
+  --positive: #3dc08c;
+  --warning: #ee7a52;
+  /* server banner: #16140f on #ee7a52 = 6.61:1 */
+  --banner-bg: #ee7a52;
+  --banner-ink: #16140f;
+  --track: #3a362d;
+  --line: #2d2a22;
+  --nav-bg: rgba(33, 30, 24, 0.92);
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --cat-0: #5a9be8;
+  --cat-1: #f2875a;
+  --cat-2: #3cc693;
+  --cat-3: #f2b83a;
+  --cat-4: #ee95b6;
+  --cat-5: #2fae2f;
+  --cat-6: #8a7ae6;
+  --cat-7: #e66767;
+  --cat-other: #6f695e;
+  color-scheme: dark;
+}
+
+/* Início: renda split + income/spending series (light) */
+:root {
+  --split-despesas: #eb6834;
+  --split-outros: #a39e93;
+  --series-income: #5b8def;
+  --series-spend: #eb6834;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --split-despesas: #f2875a;
+    --split-outros: #8a857a;
+    --series-income: #7aa5f5;
+    --series-spend: #f2875a;
+  }
+}
+:root[data-theme="dark"] {
+  --split-despesas: #f2875a;
+  --split-outros: #8a857a;
+  --series-income: #7aa5f5;
+  --series-spend: #f2875a;
+}
+
+/* Text drawn on a category slice (doughnut % labels): the higher-contrast of white / dark ink per slot. */
+:root {
+  --cat-0-ink: #ffffff; --cat-1-ink: #1d1b18; --cat-2-ink: #1d1b18; --cat-3-ink: #1d1b18;
+  --cat-4-ink: #1d1b18; --cat-5-ink: #ffffff; --cat-6-ink: #ffffff; --cat-7-ink: #000000; /* 5.31:1 on #e34948 (ink #1d1b18 is 4.35) */
+  --cat-other-ink: #1d1b18;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cat-0-ink: #1d1b18; --cat-1-ink: #1d1b18; --cat-2-ink: #1d1b18; --cat-3-ink: #1d1b18;
+    --cat-4-ink: #1d1b18; --cat-5-ink: #1d1b18; --cat-6-ink: #1d1b18; --cat-7-ink: #1d1b18;
+    --cat-other-ink: #ffffff;
+  }
+}
+:root[data-theme="dark"] {
+  --cat-0-ink: #1d1b18; --cat-1-ink: #1d1b18; --cat-2-ink: #1d1b18; --cat-3-ink: #1d1b18;
+  --cat-4-ink: #1d1b18; --cat-5-ink: #1d1b18; --cat-6-ink: #1d1b18; --cat-7-ink: #1d1b18;
+  --cat-other-ink: #ffffff;
+}
+
+/* Sankey: extra income-source hues (blue/violet family) beyond --series-income and --accent */
+:root { --flow-src-2: #3f6fd6; --flow-src-3: #9a8cf0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --flow-src-2: #5f8fe6; --flow-src-3: #b3a8f7; }
+}
+:root[data-theme="dark"] { --flow-src-2: #5f8fe6; --flow-src-3: #b3a8f7; }
+
+/* Diverging pair (Patrimônio › Aportes): blue = net invested, red = net withdrawn.
+   validate_palette.js: light on --card #ffffff, dark on --card #211e18: all checks pass. */
+:root { --div-pos: #2a78d6; --div-neg: #e34948; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --div-pos: #3987e5; --div-neg: #e66767; }
+}
+:root[data-theme="dark"] { --div-pos: #3987e5; --div-neg: #e66767; }

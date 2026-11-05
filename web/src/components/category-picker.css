@@ -1,0 +1,20 @@
+.cpick-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 5px; border: 0; border-radius: 999px; padding: 7px 11px;
+  font-size: 13px; background: var(--track); color: var(--ink); transition: background 0.12s ease;
+}
+.chip:hover { background: color-mix(in srgb, var(--accent) 14%, var(--track)); }
+.chip.sel { background: var(--accent-fill); color: var(--on-accent); font-weight: 600; }
+.chip-more { color: var(--ink-2); }
+@media (prefers-reduced-motion: reduce) { .chip { transition: none; } }
+
+.cpick-panel { margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 8px; background: var(--card); }
+.cpick-search {
+  width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font: inherit; font-size: 13.5px;
+  background: var(--bg); color: var(--ink);
+}
+.cpick-list { max-height: 260px; overflow-y: auto; margin-top: 6px; }
+.cpick-line { font-size: 11px; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 8px 6px 4px; }
+.cpick-opt { padding: 7px 8px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+.cpick-opt:hover, .cpick-opt[aria-selected="true"] { background: var(--track); }
+.cpick-none { font-size: 13px; color: var(--muted); padding: 8px 6px; }
